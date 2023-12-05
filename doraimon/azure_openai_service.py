@@ -20,6 +20,7 @@ class AzureOpenAIService:
             deployment_name="gpt-35-turbo-16k_canadaeast",
             openai_api_key=os.getenv("AZURE_OPENAI_KEY"),
             openai_api_type="azure",
+            temperature=0.7,
         )
 
     def chat(self, text):
