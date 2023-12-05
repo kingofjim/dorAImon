@@ -6,6 +6,7 @@ from langchain.prompts.chat import (
     SystemMessagePromptTemplate,
     HumanMessagePromptTemplate,
 )
+
 from langchain.memory import ChatMessageHistory
 from langchain.chat_models import AzureChatOpenAI
 
@@ -23,13 +24,45 @@ class AzureOpenAIService:
             temperature=0.7,
         )
 
-    def chat(self, text):
-        human_template = """{user_message}"""
-        human_message_prompt = HumanMessagePromptTemplate.from_template(
-            human_template)
-        
-        message = human_message_prompt.format_messages(user_message=text)
-        
-        response = self.chatbot(message)
+        system_template = """Your are a assistant to help HR to find the best candidate for the job."""
+
+        system_message_prompt = SystemMessagePromptTemplate.from_template(
+            system_template)
+
+        init_message = system_message_prompt.format()
+        self.history = ChatMessageHistory()
+        self.history.add_message(init_message)
+
+    def chat(self, message):
+        messages = self.generate_prompt(message)
+        response = self.chatbot(messages)
 
         return response
+
+    def generate_prompt(self, message):
+        system_template = """   
+        """
+
+        human_template = """
+            {user_message}
+        """
+
+        system_message_prompt = SystemMessagePromptTemplate.from_template(
+            system_template)
+
+        human_message_prompt = HumanMessagePromptTemplate.from_template(
+            human_template)
+
+        chat_prompt = ChatPromptTemplate.from_messages([
+            system_message_prompt,
+            human_message_prompt
+        ])
+
+        messages = chat_prompt.format_prompt(
+            user_message=message
+        ).to_messages()
+
+        for message in messages:
+            self.history.add_message(message)
+
+        return self.history.messages

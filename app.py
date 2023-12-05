@@ -11,7 +11,7 @@ openai_service = azure_openai_service.AzureOpenAIService()
 
 @app.route('/')
 def index():
-    response = openai_service.chat('Hello')
+    response = openai_service.chat('Hello, told me about yourself.')
     print('response:')
     print(response)
     return render_template('index.html')
