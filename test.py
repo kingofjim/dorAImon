@@ -1,32 +1,24 @@
-from flask import Flask, render_template, request
-from dotenv import load_dotenv
-from doraimon import azure_openai_service
 from flask import Flask, request, jsonify
+from flask_restx import Api, Resource, fields, reqparse
 from werkzeug.datastructures import FileStorage
 from flask.helpers import send_file
+from azure.storage.blob import BlobServiceClient
 from datetime import datetime
 from io import BytesIO
 import fitz
 import os
-
-load_dotenv()
+import copy
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'YOUR_SECRET_KEY'
+api = Api(app, version='1.0', title='Your API Title', description='Your API Description', doc='/swagger/')
 
-openai_service = azure_openai_service.AzureOpenAIService()
+# Azure Storage configuration
+azure_storage_connection_string = 'DefaultEndpointsProtocol=https;AccountName=team36sa;AccountKey=PQWSHgNjJsSUY8XAaOonmXt3pb3OZ11fySbKnA31RnU34qLAKvqKh0BEtovLwW8NNxs9nPmKPdbp+ASt1D5tsg==;EndpointSuffix=core.windows.net'
+container_name = 'pdf'
 
+blob_service_client = BlobServiceClient.from_connection_string(azure_storage_connection_string)
+container_client = blob_service_client.get_container_client(container_name)
 
-@app.route('/')
-def index():
-    message = request.args['message']
-    response = openai_service.chat(message)
-    return render_template('index.html', response=response, history=openai_service.history)
-
-
-@app.route('/upload_resume', methods=['GET', 'POST'])
-def upload_resume():
-    return render_template('upload_resume.html')
 
 def convert_text_from_pdf(pdf_path):
     text = ""
@@ -121,5 +113,5 @@ class DownloadBlob(Resource):
             return {'error': f'Error downloading blob: {str(e)}'}, 500
 
 
-if __name__ == ('__main__'):
-    app.run(debug=True, host="0.0.0.0")
+if __name__ == '__main__':
+    app.run(debug=True)
