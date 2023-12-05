@@ -52,11 +52,11 @@ class PromptSolutionService:
 
     def generate_further_question_prompt(self, conversations):
         system_template = """
-        你是一個面試軟體工程師的輔助工具, 你要針對後續提供的面試對話內容幫助面試官提出可以幫助面試官的提問      
-        內容需要涵蓋      
-        1. 可以更深入的問題      
-        2. 可以延伸的問題      
-        每一點最多三個而且要簡短讓面試官可以直接使用,而且不需要額外的說明
+        You are an assistant tool for interviewing software engineers. You need to help the interviewer with questions based on the subsequent interview dialogue content. The content needs to cover:
+
+        1. More in-depth questions
+        2. Extendable questions
+        For each point, provide up to three questions and keep them brief so the interviewer can use them directly without needing additional explanations.
         
         {conversations}
         """
