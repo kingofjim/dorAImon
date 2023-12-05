@@ -19,6 +19,7 @@ def index():
     response = openai_service.chat(message)
     return render_template('index.html', response=response, history=openai_service.history)
 
+@app.route('/upload', methods=['POST'])
 def upload():
     file = request.files['file']
     file.save(os.path.join('data', file.filename))
