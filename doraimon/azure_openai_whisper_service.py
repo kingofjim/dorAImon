@@ -7,7 +7,7 @@ class AzureOpenAIWhisperService:
     def __init__(self):
         load_dotenv()
 
-    def get_transcriptions(filepath):
+    def get_transcriptions(self, filepath):
         endpoint = os.getenv("AZURE_W_OPENAI_ENDPOINT")
         key = os.getenv("AZURE_W_OPENAI_KEY")
         headers = {

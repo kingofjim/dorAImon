@@ -25,7 +25,10 @@ def upload():
     file.save(os.path.join('data', file.filename))
     filepath = os.path.join('data', file.filename)
     
-    return openai_whisper_service.get_transcriptions(filepath)
+    data = openai_whisper_service.get_transcriptions(filepath)
+    messages = data.text.split(".")
+    
+    return messages
 
 if __name__ == ('__main__'):
     app.run(debug=True, host="0.0.0.0")
