@@ -40,6 +40,12 @@ class AzureOpenAIService:
 
         return response
 
+    def chatbot(self, prompt):
+        response = self.chatbot(prompt)
+        self.history.add_ai_message(response.content)
+
+        return response
+
     def generate_prompt(self, message):
         # system_template = ""
         human_template = """{user_message}"""

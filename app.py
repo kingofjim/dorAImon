@@ -11,7 +11,7 @@ app.config['SECRET_KEY'] = 'YOUR_SECRET_KEY'
 
 openai_service = azure_openai_service.AzureOpenAIService()
 openai_whisper_service = azure_openai_whisper_service.AzureOpenAIWhisperService()
-
+pmptSvc = azure_openai_whisper_service.PromptSolutionService()
 
 @app.route('/')
 def index():
@@ -21,13 +21,19 @@ def index():
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    file = request.files['file']
-    file.save(os.path.join('data', file.filename))
-    filepath = os.path.join('data', file.filename)
+    # file = request.files['file']
+    # file.save(os.path.join('data', file.filename))
+    # filepath = os.path.join('data', file.filename)
     
-    data = openai_whisper_service.get_transcriptions(filepath)
-    messages = data.text.split(".")
+    # data = openai_whisper_service.get_transcriptions(filepath)
+    # messages = data.text.split(".")
+    messages = ["Hello, my name is Bob and I am good at python", "Hi nice to meet you, python master"]
+
+    prompt = pmptSvc.generate_further_question_prompt(messages)
+    aiResult = openai_service.chat(prompt)
     
+    messages.append(aiResult.content)
+
     return messages
 
 if __name__ == ('__main__'):
