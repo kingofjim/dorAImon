@@ -23,13 +23,13 @@ def index():
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    # file = request.files['file']
-    # file.save(os.path.join('data', file.filename))
-    # filepath = os.path.join('data', file.filename)
+    file = request.files['file']
+    file.save(os.path.join('data', file.filename))
+    filepath = os.path.join('data', file.filename)
     
-    # data = openai_whisper_service.get_transcriptions(filepath)
-    # messages = data.text.split(".")
-    messages = ["Hello, my name is Bob and I am good at python", "Hi nice to meet you, python master"]
+    data = openai_whisper_service.get_transcriptions(filepath)
+    messages = data.text.split(".")
+    # messages = ["Hello, my name is Bob and I am good at python", "Hi nice to meet you, python master"]
 
     prompt = pmptSvc.generate_further_question_prompt(messages)
     aiResult = openai_service.chat(prompt)
