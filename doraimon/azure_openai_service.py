@@ -36,25 +36,22 @@ class AzureOpenAIService:
     def chat(self, message):
         messages = self.generate_prompt(message)
         response = self.chatbot(messages)
+        self.history.add_ai_message(response.content)
 
         return response
 
     def generate_prompt(self, message):
-        system_template = """   
-        """
+        # system_template = ""
+        human_template = """{user_message}"""
 
-        human_template = """
-            {user_message}
-        """
-
-        system_message_prompt = SystemMessagePromptTemplate.from_template(
-            system_template)
+        # system_message_prompt = SystemMessagePromptTemplate.from_template(
+        #     system_template)
 
         human_message_prompt = HumanMessagePromptTemplate.from_template(
             human_template)
 
         chat_prompt = ChatPromptTemplate.from_messages([
-            system_message_prompt,
+            # system_message_prompt,
             human_message_prompt
         ])
 
