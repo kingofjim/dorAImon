@@ -4,11 +4,12 @@ from dotenv import load_dotenv
 from doraimon import azure_openai_service
 from doraimon import azure_openai_whisper_service
 from doraimon import prompt_solution_service
-
+from flask_cors import CORS
 
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 app.config['SECRET_KEY'] = 'YOUR_SECRET_KEY'
 
 openai_service = azure_openai_service.AzureOpenAIService()
