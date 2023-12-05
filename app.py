@@ -17,4 +17,4 @@ def index():
     return render_template('index.html', response=response, history=openai_service.history)
 
 if __name__ == ('__main__'):
-    app.run()
+    (debug=True, host=‘0.0.0.0’)
