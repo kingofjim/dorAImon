@@ -1,3 +1,4 @@
+import json
 import os
 from flask import Flask, render_template, request
 from dotenv import load_dotenv
@@ -29,7 +30,9 @@ def upload():
     filepath = os.path.join('data', file.filename)
     
     data = openai_whisper_service.get_transcriptions(filepath)
-    messages = data.text.split(".")
+    json_data = json.loads(data.text)
+
+    messages = json_data['text'].split(".")
     # messages = ["Hello, my name is Bob and I am good at python", "Hi nice to meet you, python master"]
 
     prompt = pmptSvc.generate_further_question_prompt(messages)
