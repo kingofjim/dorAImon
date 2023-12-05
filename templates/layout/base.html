@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{% block head %}
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>DorAImon - {% block title %}{% endblock %}</title>
+		{% endblock %}
+	</head>
+	<body>
+		<div id="header">{% block header %}{% endblock %}</div>
+		<div id="content" class="flex">{% block content %}{% endblock %}</div>
+		<div id="footer">{% block footer %}{% endblock %}</div>
+	</body>
+</html>
