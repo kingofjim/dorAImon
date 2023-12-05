@@ -2,6 +2,8 @@ from langchain.prompts.chat import (
     SystemMessagePromptTemplate,
 )
 
+from dotenv import load_dotenv
+
 
 class PromptSolutionService:
     def __init__(self):

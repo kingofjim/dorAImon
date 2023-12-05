@@ -3,6 +3,8 @@ from flask import Flask, render_template, request
 from dotenv import load_dotenv
 from doraimon import azure_openai_service
 from doraimon import azure_openai_whisper_service
+from doraimon import prompt_solution_service
+
 
 load_dotenv()
 
@@ -11,7 +13,7 @@ app.config['SECRET_KEY'] = 'YOUR_SECRET_KEY'
 
 openai_service = azure_openai_service.AzureOpenAIService()
 openai_whisper_service = azure_openai_whisper_service.AzureOpenAIWhisperService()
-pmptSvc = azure_openai_whisper_service.PromptSolutionService()
+pmptSvc = prompt_solution_service.PromptSolutionService()
 
 @app.route('/')
 def index():
