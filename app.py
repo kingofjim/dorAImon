@@ -19,13 +19,11 @@ openai_whisper_service = azure_openai_whisper_service.AzureOpenAIWhisperService(
 pdf_parse_service = pdf_parse_service.PDFParseService()
 pmptSvc = prompt_solution_service.PromptSolutionService()
 
-
 @app.route('/')
 def index():
     message = request.args['message']
     response = openai_service.chat(message)
     return render_template('index.html', response=response, history=openai_service.history)
-
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -70,7 +68,13 @@ def cv_summary_post():
     job_fit_prompt = pmptSvc.generate_job_fit_analysis_prompt(jd_content.text, cv_prompt_response.content)
     job_fit_prompt_response = openai_service.chat(job_fit_prompt)
 
-    return job_fit_prompt_response.content
+    print(job_fit_prompt_response.content)
+    return render_template('cv_summary.html', content=job_fit_prompt_response.content)
+
+@app.route('/job_fit', methods=['GET'])
+def job_fit():
+    return render_template('job_fit.html')
+
 
 if __name__ == ('__main__'):
     app.run(debug=True, host="0.0.0.0", ssl_context=('/cert/mycert.crt', '/cert/mykey.key'))

@@ -1,0 +1,23 @@
+{% extends "layout/base.html" %}
+{% block title %}
+    Job Fit
+{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+
+    <form action="/cv_summary" method="post" enctype="multipart/form-data">
+        CV Input:
+        <input type="file" name="file" accept=".pdf">
+
+        JD Input:
+        <input type="file" name="file" accept=".pdf">
+
+        <input type="submit" value="Upload">
+    </form>
+    
+    
+    
+    
+{% endblock %}
