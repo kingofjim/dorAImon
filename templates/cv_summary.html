@@ -6,5 +6,7 @@
     {{ super() }}
 {% endblock %}
 {% block content %}
-    {{ content }}
+    {% autoescape false %}
+    {{content}}
+    {% endautoescape %}
 {% endblock %}

@@ -69,7 +69,8 @@ def cv_summary_post():
     job_fit_prompt_response = openai_service.chat(job_fit_prompt)
 
     print(job_fit_prompt_response.content)
-    return render_template('cv_summary.html', content=job_fit_prompt_response.content)
+    content = job_fit_prompt_response.content.replace('\n', '<br>')
+    return render_template('cv_summary.html', content=content)
 
 @app.route('/job_fit', methods=['GET'])
 def job_fit():
